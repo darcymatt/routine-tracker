@@ -1,778 +1,187 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Task Flow Pro</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Tracker</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-      :root {
-        --primary: #6366f1;
-        --primary-dark: #4f46e5;
-        --primary-light: #818cf8;
-        --success: #22c55e;
-        --warning: #f59e0b;
-        --error: #ef4444;
-        --info: #3b82f6;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-      }
-
-      body {
-        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-        min-height: 100vh;
-        color: #1e293b;
-        line-height: 1.5;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 0 1.5rem;
-      }
-
-      .header {
-        text-align: center;
-        margin-bottom: 3rem;
-        padding: 3rem;
-        background: linear-gradient(
-          135deg,
-          var(--primary),
-          var(--primary-dark)
-        );
-        color: white;
-        border-radius: 1.5rem;
-        box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .header::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-          45deg,
-          transparent,
-          rgba(255, 255, 255, 0.1)
-        );
-        pointer-events: none;
-      }
-
-      .header h1 {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        font-weight: 800;
-        letter-spacing: -0.025em;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      .header p {
-        font-size: 1.25rem;
-        opacity: 0.9;
-      }
-
-      .glass-container {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-        border-radius: 1.5rem;
-        padding: 2.5rem;
-        margin-bottom: 2rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .glass-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
-      }
-
-      .section-title {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin-bottom: 2rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        color: var(--primary-dark);
-      }
-
-      .form-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-      }
-
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 0.75rem;
-        font-weight: 600;
-        color: #475569;
-      }
-
-      .form-control {
-        width: 100%;
-        padding: 1rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 0.75rem;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        background: #f8fafc;
-      }
-
-      .form-control:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
-      }
-
-      .checkbox-group {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin: 1.5rem 0;
-        padding: 1rem;
-        background: #f8fafc;
-        border-radius: 0.75rem;
-      }
-
-      .checkbox-group input[type="checkbox"] {
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 0.375rem;
-        cursor: pointer;
-        accent-color: var(--primary);
-      }
-
-      .btn {
-        padding: 1rem 2rem;
-        border: none;
-        border-radius: 0.75rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 1.1rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .btn-primary {
-        background: var(--primary);
-        color: white;
-        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
-      }
-
-      .btn-primary:hover {
-        background: var(--primary-dark);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
-      }
-
-      .task-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.5rem;
-        margin-bottom: 1.25rem;
-        background: #f8fafc;
-        border-radius: 1rem;
-        border-left: 5px solid #e2e8f0;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      }
-
-      .task-item:hover {
-        transform: translateX(5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      .task-item.priority-high {
-        border-left-color: var(--error);
-      }
-      .task-item.priority-medium {
-        border-left-color: var(--warning);
-      }
-      .task-item.priority-low {
-        border-left-color: var(--success);
-      }
-
-      .task-checkbox {
-        width: 1.5rem;
-        height: 1.5rem;
-        border-radius: 0.375rem;
-        cursor: pointer;
-        accent-color: var(--primary);
-      }
-
-      .task-info {
-        flex-grow: 1;
-        margin: 0 1.5rem;
-      }
-
-      .task-title {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #1e293b;
-        margin-bottom: 0.5rem;
-      }
-
-      .task-time {
-        color: #64748b;
-        font-size: 0.875rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .task-actions {
-        display: flex;
-        gap: 1rem;
-      }
-
-      .btn-icon {
-        padding: 0.75rem;
-        border-radius: 0.75rem;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: #f1f5f9;
-        color: #64748b;
-      }
-
-      .btn-icon:hover {
-        background: var(--primary-light);
-        color: white;
-        transform: translateY(-2px);
-      }
-
-      .alert {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        padding: 1rem 2rem;
-        border-radius: 1rem;
-        color: white;
-        max-width: 400px;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        animation: slideIn 0.5s ease forwards;
-        z-index: 1000;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      }
-
-      .alert-error {
-        background: linear-gradient(135deg, var(--error), #dc2626);
-      }
-      .alert-success {
-        background: linear-gradient(135deg, var(--success), #16a34a);
-      }
-      .alert-warning {
-        background: linear-gradient(135deg, var(--warning), #d97706);
-      }
-      .alert-info {
-        background: linear-gradient(135deg, var(--info), #2563eb);
-      }
-
-      .empty-state {
-        text-align: center;
-        padding: 4rem 2rem;
-        color: #64748b;
-      }
-
-      .empty-state i {
-        font-size: 4rem;
-        margin-bottom: 1.5rem;
-        color: var(--primary-light);
-      }
-
-      .empty-state p {
-        font-size: 1.125rem;
-        margin-bottom: 2rem;
-      }
-
-      @keyframes slideIn {
-        from {
-          transform: translateX(100%) translateY(100%);
-          opacity: 0;
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
         }
-        to {
-          transform: translateX(0) translateY(0);
-          opacity: 1;
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
-      }
-
-      @media (max-width: 768px) {
-        .container {
-          margin: 1rem;
-          padding: 0 1rem;
+        .feature-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-
-        .header {
-          padding: 2rem;
+        .bg-pattern {
+            background-color: #f0f9ff;
+            background-image: 
+                radial-gradient(circle at 100% 100%, #6366f1 0%, transparent 40%),
+                radial-gradient(circle at 0% 0%, #ec4899 0%, transparent 40%);
+            background-attachment: fixed;
         }
-
-        .header h1 {
-          font-size: 2.5rem;
+        .glow {
+            animation: glow 3s ease-in-out infinite alternate;
         }
-
-        .glass-container {
-          padding: 1.5rem;
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #6366f1, 0 0 20px #8b5cf6, 0 0 30px #ec4899;
+            }
+            to {
+                box-shadow: 0 0 20px #6366f1, 0 0 30px #8b5cf6, 0 0 40px #ec4899;
+            }
         }
-
-        .task-item {
-          flex-direction: column;
-          gap: 1rem;
-          padding: 1rem;
+        .rainbow-text {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rainbow 6s ease infinite;
         }
-
-        .task-actions {
-          width: 100%;
-          justify-content: flex-end;
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-      }
-
-      .alert {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        padding: 1rem 2rem;
-        border-radius: 1rem;
-        color: white;
-        max-width: 400px;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        animation: slideIn 0.5s ease forwards;
-        z-index: 1000;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      }
-
-      .alert-error {
-        background: linear-gradient(135deg, var(--error), #dc2626);
-      }
-      .alert-success {
-        background: linear-gradient(135deg, var(--success), #16a34a);
-      }
-      .alert-warning {
-        background: linear-gradient(135deg, var(--warning), #d97706);
-      }
-      .alert-info {
-        background: linear-gradient(135deg, var(--info), #2563eb);
-      }
-
-      @keyframes slideIn {
-        from {
-          transform: translateX(100%) translateY(100%);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(0) translateY(0);
-          opacity: 1;
-        }
-      }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <header class="header">
-        <h1><i class="fas fa-tasks"></i> Task Flow Pro</h1>
-        <p>Streamline your workflow, amplify your productivity</p>
-      </header>
-
-      <div class="glass-container">
-        <h2 class="section-title">
-          <i class="fas fa-plus-circle"></i>
-          Create New Task
-        </h2>
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="taskTitle">Task Title</label>
-            <input
-              type="text"
-              id="taskTitle"
-              class="form-control"
-              placeholder="Enter your task title"
-            />
-          </div>
-          <div class="form-group">
-            <label for="startTime">Start Time</label>
-            <input type="datetime-local" id="startTime" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label for="endTime">End Time</label>
-            <input type="datetime-local" id="endTime" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label for="priority">Priority Level</label>
-            <select id="priority" class="form-control">
-              <option value="low">Low Priority</option>
-              <option value="medium">Medium Priority</option>
-              <option value="high">High Priority</option>
-            </select>
-          </div>
+</head>
+<body class="bg-pattern">
+    <nav class="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold rainbow-text">RoutineTracker</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="px-4 py-2 text-indigo-600 hover:text-pink-500 transition-colors duration-300">Login</button>
+                    <button class="px-6 py-2 gradient-bg text-white rounded-full hover:scale-105 transition-transform duration-300">Sign Up</button>
+                </div>
+            </div>
         </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="isFixed" />
-          <label for="isFixed">Fixed Time Task</label>
-        </div>
-        <button onclick="addTask()" class="btn btn-primary">
-          <i class="fas fa-plus"></i>
-          Add Task
-        </button>
-      </div>
+    </nav>
 
-      <div class="glass-container">
-        <h2 class="section-title">
-          <i class="fas fa-list-check"></i>
-          Your Tasks
-        </h2>
-        <div id="taskItems">
-          <!-- Tasks will be rendered here -->
-        </div>
-      </div>
-    </div>
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 rainbow-text">
+                        Plan Your Day with Magic
+                    </h1>
+                    <p class="text-2xl text-gray-700 mb-12">
+                        Transform your daily routine into an effortless symphony of productivity
+                    </p>
+                    <button onclick="window.location.href='taska.html'" 
+                    class="px-12 py-6 gradient-bg text-white rounded-full text-xl hover:scale-105 transition-transform duration-300 glow">
+                    Start Your Journey
+                </button>
+                
+                </div>
+            </div>
+        </section>
 
-    <script>
-      let tasks = [];
-      let currentAlert = null;
-
-      // Initialize the app
-      function init() {
-        const savedTasks = localStorage.getItem("tasks");
-        if (savedTasks) {
-          tasks = JSON.parse(savedTasks);
-          renderTasks();
-        }
-        setDefaultTimes();
-      }
-
-      // Set default times to current hour and next hour
-      function setDefaultTimes() {
-        const now = new Date();
-        const later = new Date(now.getTime() + 60 * 60 * 1000);
-
-        document.getElementById("startTime").value = now
-          .toISOString()
-          .slice(0, 16);
-        document.getElementById("endTime").value = later
-          .toISOString()
-          .slice(0, 16);
-      }
-
-      function displayTasks() {
-        // Retrieve tasks from localStorage
-        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-        const taskList = document.getElementById("taskList");
-        taskList.innerHTML = ""; // Clear current task list
-
-        tasks.forEach((task, index) => {
-          const taskItem = document.createElement("li");
-          taskItem.classList.add("taskItem");
-          if (task.completed) {
-            taskItem.classList.add("completed");
-          }
-
-          taskItem.innerHTML = `
-                    <span class="taskTitle">${task.title}</span>
-                    <span class="taskTime">From: ${task.start} To: ${task.end}</span>
-                    <span class="priority">${task.priority}</span>
-                    <button onclick="toggleTaskCompletion(${index})">Complete</button>
-                    <button onclick="deleteTask(${index})">Delete</button>
-                `;
-
-          taskList.appendChild(taskItem);
-        });
-      }
-
-      function addTask() {
-        const title = document.getElementById("taskTitle").value;
-        const start = document.getElementById("startTime").value;
-        const end = document.getElementById("endTime").value;
-        const priority = document.getElementById("priority").value;
-        const isFixed = document.getElementById("isFixed").checked;
-
-        if (!title || !start || !end) {
-          alert("Please fill in all fields.");
-          return;
-        }
-
-        const newTask = {
-          title,
-          start,
-          end,
-          priority,
-          isFixed,
-          completed: false,
-        };
-
-        tasks.push(newTask);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-
-        displayTasks(); // Refresh tasks on the page
-      }
-
-      function validateTask(task) {
-        if (!task.title.trim()) {
-          showAlert("Please enter a task title", "error");
-          return false;
-        }
-
-        const now = new Date();
-        const start = new Date(task.startTime);
-        const end = new Date(task.endTime);
-
-        if (!task.startTime || !task.endTime) {
-          showAlert("Please select both start and end times", "error");
-          return false;
-        }
-
-        if (!task.isFixed && start < now) {
-          showAlert("Cannot schedule tasks in the past", "error");
-          return false;
-        }
-
-        if (end <= start) {
-          showAlert("End time must be after start time", "error");
-          return false;
-        }
-
-        if ((end - start) / 1000 / 60 < 1) {
-          showAlert("Task must be at least 1 minute long", "error");
-          return false;
-        }
-
-        const hasOverlap = tasks.some((t) => {
-          // Continuing from the validateTask function...
-          if (t.id === task.id) return false;
-          const tStart = new Date(t.startTime);
-          const tEnd = new Date(t.endTime);
-          return start < tEnd && end > tStart;
-        });
-
-        if (hasOverlap) {
-          showAlert("Task overlaps with existing tasks", "warning");
-          return false;
-        }
-
-        return true;
-      }
-
-      function deleteTask(id) {
-        tasks = tasks.filter((task) => task.id !== id);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        renderTasks();
-        showAlert("Task deleted successfully", "info");
-      }
-
-      function toggleTaskStatus(id) {
-        const task = tasks.find((t) => t.id === id);
-        if (task) {
-          task.completed = !task.completed;
-          localStorage.setItem("tasks", JSON.stringify(tasks));
-          renderTasks();
-          showAlert(
-            task.completed ? "Task completed! 🎉" : "Task unmarked",
-            "success"
-          );
-        }
-      }
-
-      function editTask(id) {
-        const task = tasks.find((t) => t.id === id);
-        if (task) {
-          document.getElementById("taskTitle").value = task.title;
-          document.getElementById("startTime").value = task.startTime;
-          document.getElementById("endTime").value = task.endTime;
-          document.getElementById("priority").value = task.priority;
-          document.getElementById("isFixed").checked = task.isFixed;
-
-          // Remove the old task
-          deleteTask(id);
-
-          // Scroll to the form
-          document.querySelector(".glass-container").scrollIntoView({
-            behavior: "smooth",
-          });
-        }
-      }
-
-      function renderTasks() {
-        const taskContainer = document.getElementById("taskItems");
-
-        if (tasks.length === 0) {
-          taskContainer.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-clipboard-list"></i>
-                        <p>No tasks yet. Add your first task to get started!</p>
-                    </div>
-                `;
-          return;
-        }
-
-        // Sort tasks by start time
-        tasks.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
-
-        taskContainer.innerHTML = tasks
-          .map(
-            (task) => `
-                <div class="task-item priority-${task.priority} ${
-              task.completed ? "completed" : ""
-            }">
-                    <input type="checkbox" 
-                           class="task-checkbox" 
-                           ${task.completed ? "checked" : ""} 
-                           onclick="toggleTaskStatus(${task.id})">
-                    <div class="task-info">
-                        <div class="task-title">${task.title}</div>
-                        <div class="task-time">
-                            <i class="fas fa-clock"></i>
-                            ${formatDateTime(
-                              task.startTime
-                            )} - ${formatDateTime(task.endTime)}
-                            ${
-                              task.isFixed
-                                ? '<span class="badge">Fixed</span>'
-                                : ""
-                            }
+        <!-- Features Section -->
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold text-center mb-16 rainbow-text">Magical Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="feature-card p-8 rounded-2xl shadow-xl">
+                        <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                         </div>
+                        <h3 class="text-2xl font-semibold mb-4 text-center text-indigo-600">Smart Scheduling</h3>
+                        <p class="text-gray-600 text-center text-lg">Magical AI-powered scheduling that adapts to your lifestyle and priorities.</p>
                     </div>
-                    <div class="task-actions">
-                        <button class="btn-icon" onclick="editTask(${task.id})">
-                            <i class="fas fa-edit"></i>
+
+                    <div class="feature-card p-8 rounded-2xl shadow-xl">
+                        <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4 text-center text-indigo-600">Intelligent Alerts</h3>
+                        <p class="text-gray-600 text-center text-lg">Stay on track with perfectly timed notifications that keep you flowing.</p>
+                    </div>
+
+                    <div class="feature-card p-8 rounded-2xl shadow-xl">
+                        <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4 text-center text-indigo-600">Flexible Control</h3>
+                        <p class="text-gray-600 text-center text-lg">Edit and adjust your schedule with delightful ease and precision.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="gradient-bg rounded-3xl p-12 text-center text-white">
+                    <h2 class="text-4xl font-bold mb-6">Ready to Transform Your Day?</h2>
+                    <p class="text-2xl mb-12 opacity-90">
+                        Join thousands of people who have revolutionized their daily routine
+                    </p>
+                    <div class="space-x-6">
+                        <button class="px-8 py-4 bg-white text-indigo-600 rounded-full text-xl hover:scale-105 transition-transform duration-300">
+                            Start Free Trial
                         </button>
-                        <button class="btn-icon" onclick="deleteTask(${
-                          task.id
-                        })">
-                            <i class="fas fa-trash"></i>
+                        <button class="px-8 py-4 border-2 border-white text-white rounded-full text-xl hover:bg-white/10 transition-colors duration-300">
+                            Watch Demo
                         </button>
                     </div>
                 </div>
-            `
-          )
-          .join("");
-      }
+            </div>
+        </section>
+    </main>
 
-      function formatDateTime(dateString) {
-        const options = {
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        };
-        return new Date(dateString).toLocaleDateString("en-US", options);
-      }
-
-      function showAlert(message, type) {
-        // Remove existing alert if any
-        if (currentAlert) {
-          currentAlert.remove();
-        }
-
-        const alert = document.createElement("div");
-        alert.className = `alert alert-${type}`;
-        alert.innerHTML = `
-                <i class="fas fa-${
-                  type === "success"
-                    ? "check-circle"
-                    : type === "error"
-                    ? "exclamation-circle"
-                    : type === "warning"
-                    ? "exclamation-triangle"
-                    : "info-circle"
-                }"></i>
-                ${message}
-            `;
-
-        document.body.appendChild(alert);
-        currentAlert = alert;
-
-        // Remove alert after 3 seconds
-        setTimeout(() => {
-          alert.remove();
-          if (currentAlert === alert) {
-            currentAlert = null;
-          }
-        }, 3000);
-      }
-
-      function validateTask(task) {
-        if (!task.title.trim()) {
-          showAlert("Please enter a task title", "error");
-          return false;
-        }
-
-        const now = new Date();
-        const start = new Date(task.startTime);
-        const end = new Date(task.endTime);
-
-        if (!task.startTime || !task.endTime) {
-          showAlert("Please select both start and end times", "error");
-          return false;
-        }
-
-        if (!task.isFixed && start < now) {
-          showAlert("Cannot schedule tasks in the past", "error");
-          return false;
-        }
-
-        if (end <= start) {
-          showAlert("End time must be after start time", "error");
-          return false;
-        }
-
-        if ((end - start) / 1000 / 60 < 1) {
-          showAlert("Task must be at least 1 minute long", "error");
-          return false;
-        }
-
-        const hasOverlap = tasks.some((t) => {
-          // Continuing from the validateTask function...
-          if (t.id === task.id) return false;
-          const tStart = new Date(t.startTime);
-          const tEnd = new Date(t.endTime);
-          return start < tEnd && end > tStart;
-        });
-
-        if (hasOverlap) {
-          showAlert("Task overlaps with existing tasks", "warning");
-          return false;
-        }
-
-        return true;
-      }
-
-      function toggleTaskCompletion(index) {
-        tasks[index].completed = !tasks[index].completed;
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        displayTasks(); // Refresh task display
-      }
-
-      function deleteTask(index) {
-        tasks.splice(index, 1); // Remove task at the given index
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        displayTasks(); // Refresh task display
-      }
-
-      // Initialize the app when the page loads
-      window.onload = init;
-    </script>
-  </body>
+    <footer class="gradient-bg text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">RoutineTracker</h3>
+                    <p class="text-white/80 text-lg">Making every day extraordinary.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Features</h3>
+                    <ul class="space-y-4 text-white/80 text-lg">
+                        <li>Smart Scheduling</li>
+                        <li>Priority Magic</li>
+                        <li>Intelligent Alerts</li>
+                        <li>Task Analytics</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Support</h3>
+                    <ul class="space-y-4 text-white/80 text-lg">
+                        <li>Documentation</li>
+                        <li>FAQ</li>
+                        <li>Contact Us</li>
+                        <li>Help Center</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Legal</h3>
+                    <ul class="space-y-4 text-white/80 text-lg">
+                        <li>Privacy Policy</li>
+                        <li>Terms of Service</li>
+                        <li>Cookie Policy</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-12 pt-8 text-center text-white/80">
+                <p>&copy; 2025 RoutineTracker. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
 </html>
