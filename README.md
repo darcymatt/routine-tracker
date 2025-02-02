@@ -1,39 +1,35 @@
-# [Project Name] 🎯
+![WhatsApp Image 2025-02-02 at 9 08 05 AM](https://github.com/user-attachments/assets/37644627-11a2-42b9-99ac-376085fbd3c4)# [Project Name] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [AURORA]
 
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Member 1: [Riona Poly] - [Model Enginnering College]
+- Member 2: [Darcy Mathew] - [Model Engineering College]
+
 
 ### Hosted Project Link
 [mention your project hosted project link here]
 
 ### Project Description
-[2-3 lines about what your project does]
+Our project is  a basic routine tracker which includes a checkmark option for marking completed tasks, 12-hour time format, real-time clock, and a calendar for planning future days. It ensures no tasks can have start times before the current time, and gives alerts for missed or ongoing tasks. Rescheduling is built to accommodate task timings, with fixed-time options and maintenance of task allocation ratios. The system disallows overlapping tasks, and prevents invalid task submissions with distinct alerts.
 
 ### The Problem statement
-[What ridiculous problem are you solving?]
+This website solves the problem of efficiently managing and organizing daily routines by helping users schedule tasks, track progress, and handle missed tasks. It prevents overlapping tasks, ensures tasks are assigned realistic durations, and allows rescheduling without disrupting the entire routine.
 
 ### The Solution
-[How are you solving it? Keep it fun!]
+We solve this problem with a structured task management system that ensures logical scheduling, real-time tracking, and intelligent rescheduling. The system prevents overlapping tasks, enforces valid start times, maintains priority order, and respects fixed-time constraints. Missed tasks trigger automatic rescheduling within available time while preserving logical time allocation. A calendar allows future planning, real-time alerts keep users informed, and validation checks prevent invalid entries. Users can also choose to skip tasks if needed, making the system flexible yet efficient for daily routine management.
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- [Languages used:HTML,CSS,Javascript]
+- [Frameworks used: None]
+- [Libraries used:None]
+- [Tools used: vs code,git hub, CHATGPT,claudeai, deepspace]
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
 
 ### Implementation
 For Software:
@@ -47,14 +43,19 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot1]
+![alt text](<Screenshot 2025-02-02 081551.png>)
+(first page of our website)
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot2]
+![alt text](<Screenshot 2025-02-02 081614.png>)
+(seond page of our website)
+
+![Screenshot3]
+![alt text](<Screenshot 2025-02-02 083403.png>)
+(code)
+
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)
@@ -70,7 +71,7 @@ For Hardware:
 *Add caption explaining the schematic*
 
 # Build Photos
-![Team](Add photo of your team here)
+![Team]
 
 
 ![Components](Add photo of your components here)
@@ -91,9 +92,10 @@ For Hardware:
 [Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [Riona Poly]: [second page]
+- [Darcy Mathew]: [first page]]
+
 
 ---
 Made with ❤️ at TinkerHub
+
