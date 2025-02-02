@@ -1,0 +1,142 @@
+// Routine Tracker Website - JavaScript Version // index.html // This is the
+HTML structure of the website. It includes input fields, buttons, and sections
+to display tasks.
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Routine Tracker</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .task {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .completed {
+        text-decoration: line-through;
+        color: gray;
+      }
+      .high-priority {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Routine Tracker</h1>
+    <label>Task: <input type="text" id="taskName" /></label>
+    <label>Time: <input type="time" id="taskTime" /></label>
+    <label>Date: <input type="date" id="taskDate" /></label>
+    <label>Priority: <input type="checkbox" id="taskPriority" /></label>
+    <button onclick="addTask()">Add Task</button>
+
+    <h2>Tasks</h2>
+    <div id="taskList"></div>
+
+    <script>
+      let tasks = [];
+
+      function addTask() {
+        const name = document.getElementById("taskName").value;
+        const time = document.getElementById("taskTime").value;
+        const date = document.getElementById("taskDate").value;
+        const priority = document.getElementById("taskPriority").checked;
+
+        const currentDateTime = new Date();
+        const taskDateTime = new Date(`${date}T${time}`);
+
+        if (taskDateTime < currentDateTime) {
+          alert("Cannot add a task before the current time.");
+          return;
+        }
+
+        const task = {
+          name,
+          time,
+          date,
+          priority,
+          completed: false,
+          missed: false,
+        };
+        tasks.push(task);
+        displayTasks();
+      }
+
+      function displayTasks() {
+        const taskList = document.getElementById("taskList");
+        taskList.innerHTML = "";
+
+        tasks.forEach((task, index) => {
+          const taskDiv = document.createElement("div");
+          taskDiv.className = `task ${task.completed ? "completed" : ""} ${
+            task.priority ? "high-priority" : ""
+          }`;
+          taskDiv.innerHTML = `
+                    <input type="checkbox" ${
+                      task.completed ? "checked" : ""
+                    } onclick="toggleTask(${index})">
+                    ${task.name} - ${task.time} (${task.date})
+                    <button onclick="editTask(${index})">Edit</button>
+                `;
+          taskList.appendChild(taskDiv);
+        });
+      }
+
+      function toggleTask(index) {
+        tasks[index].completed = !tasks[index].completed;
+        displayTasks();
+      }
+
+      function editTask(index) {
+        const newName = prompt("Edit task name:", tasks[index].name);
+        const newTime = prompt("Edit task time (HH:MM):", tasks[index].time);
+        const newDate = prompt(
+          "Edit task date (YYYY-MM-DD):",
+          tasks[index].date
+        );
+        if (newName && newTime && newDate) {
+          tasks[index].name = newName;
+          tasks[index].time = newTime;
+          tasks[index].date = newDate;
+          displayTasks();
+        }
+      }
+
+      function checkMissedTasks() {
+        const now = new Date();
+        tasks.forEach((task) => {
+          const taskDateTime = new Date(`${task.date}T${task.time}`);
+          if (!task.completed && taskDateTime < now && !task.missed) {
+            alert(`You missed the task: ${task.name}`);
+            task.missed = true;
+            rescheduleTasks(task);
+          }
+        });
+      }
+
+      function rescheduleTasks(missedTask) {
+        const missedIndex = tasks.indexOf(missedTask);
+        for (let i = missedIndex + 1; i < tasks.length; i++) {
+          const prevTaskDateTime = new Date(
+            `${tasks[i - 1].date}T${tasks[i - 1].time}`
+          );
+          const newDateTime = new Date(
+            prevTaskDateTime.getTime() + 60 * 60 * 1000
+          );
+          tasks[i].date = newDateTime.toISOString().split("T")[0];
+          tasks[i].time = newDateTime.toTimeString().slice(0, 5);
+        }
+        displayTasks();
+      }
+
+      setInterval(checkMissedTasks, 60000); // Check every minute
+    </script>
+  </body>
+</html>
