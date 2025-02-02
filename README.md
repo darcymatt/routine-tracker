@@ -1,4 +1,4 @@
-![WhatsApp Image 2025-02-02 at 9 08 05 AM](https://github.com/user-attachments/assets/37644627-11a2-42b9-99ac-376085fbd3c4)# [Project Name] 🎯
+ [ROUTINE TRACKER] 🎯
 
 
 ## Basic Details
